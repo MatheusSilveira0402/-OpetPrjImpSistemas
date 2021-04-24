@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8">
+
+		<title>OpeNet</title>
+		
+		<!-- JQuery -->
+		<script src="js/jquery-2.2.1.js"></script>
+
+		<!-- bootstrap - link cdn -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	
+		<!-- incluindo css -->
+		<link href="css/style.css" rel="stylesheet">
+		<script>
+			$(document).ready( function(){
+				$('#btn_voltar').click(function(){
+					
+					window.location.href = '/';	
+
+				});
+			});
+		</script>
+	</head>
+    <body class="body-index">
+		<nav class="navbar navbar-default navbar-static-top">
+			<div class="container">
+				
+			</div>
+		</nav>
+        <div class="container">					
+            <div class="alert alert-info" style="align-items: center; text-align: center;">    
+                <h3>Cadastrado!</h3>
+				
+				<strong>Usuario cadastrado com sucesso!</strong>
+					<form class="form-inline form-entrar">
+						<div class="form-group">				
+							<button type="button" class="btn btn-success" id="btn_voltar">Voltar</button>
+						</div>
+					</form>
+			</div>
+        </div>	
+	</body>
+</html>
+
+
