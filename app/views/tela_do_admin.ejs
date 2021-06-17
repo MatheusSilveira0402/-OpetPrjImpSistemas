@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+	<head>
+		
+		<meta charset="UTF-8">
+		<link rel="icon" href="images/icon.png">
+		<title>OpeNet</title>
+		
+		<!-- JQuery -->
+		<script src="js/jquery-2.2.1.js"></script>
+
+		<!-- bootstrap - link cdn -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	
+		<!-- incluindo css -->
+		<link href="css/style.css" rel="stylesheet">
+		
+	</head>
+    <body class="body-index">
+		<nav class="navbar navbar-default navbar-static-top" style="background: transparent; border-color: transparent; text-align: end;">
+			<div class="container">
+				<a class="navbar-brand" href="/sair" style="color: aliceblue;">Sair</a>
+			</div>
+		</nav>
+        <div class="container">					
+            <div class="alert alert-info" style="align-items: center; text-align: center; background-color: rgba(240, 248, 255, 0);">  
+				<h3 style="color:rgb(255, 255, 255);">Lista de usuarios para ser aprovados</h3>  
+				<br/>
+				<% for(var i = 0; i < dadosForm.length; i++) { %>	
+				<form class="form-inline form-entrar" style="background-color: rgba(255, 255, 255, 0); border-top: 1px dashed; border-color: aliceblue;" method="POST" action="/adminset">
+					<br/>	
+					<div class="form-group">
+							<strong>
+								<ul>
+									<li style="color: rgb(255, 254, 254);">
+										Nome: <%=dadosForm[i].usuario%> 
+										<br/> 
+										Curso: <%=dadosForm[i].curso%> 
+										<br/>
+										<br/>
+										<input hidden value="<%=dadosForm[i].usuario%>"  id="usuario" name="usuario" type="text">
+										<button type="submit" class="btn btn-success" id="aprovar"  >aprovar</button>
+										<br/>
+										<br>
+									</li>
+								</ul>  
+							</strong>				
+							
+						</div>
+					</form>
+				<% } %>	
+			</div>
+        </div>	
+	</body>
+</html>
+
+

@@ -42,3 +42,45 @@ module.exports.cadastro_sucesso = function(application, req, res){
 module.exports.cadastro_sem_sucesso = function(application, req, res){
 	res.render('cadastro_sem_sucesso');
 }
+
+module.exports.cadastro_em_avalicao = function(application, req, res){
+	res.render('cadastro_em_avalicao');
+}
+
+module.exports.admin = function(application, req, res){
+	var connection = application.config.connectiondb;
+	var UsuariosDAO = new application.app.models.UsuarioDAO(connection);
+	
+	if(req.session.autorizado){
+		if(req.session.usuario === "admin"){
+			UsuariosDAO.listarUsuario(res, req);
+		}else {
+			res.render('sem_login');
+		}
+	} else {
+		res.render('sem_login');
+
+	}
+	
+	
+	
+	
+}
+
+module.exports.adminset = function(application, req, res){
+	
+
+	var connection = application.config.connectiondb;
+	var UsuariosDAO = new application.app.models.UsuarioDAO(connection);
+
+	var dadosForm = req.body;
+
+	console.log(dadosForm);
+	
+	
+	UsuariosDAO.aprovarUsuario(dadosForm, res, req);
+}
+
+
+
+

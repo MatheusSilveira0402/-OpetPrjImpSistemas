@@ -2,6 +2,9 @@ module.exports.iniciaChat =	function(application, req, res){
 
 	if(req.session.autorizado){
 		res.render("chat", {dadosForm: req.session.usuario});
+
+		
+		
 	} else {
 		res.send('Usuario precisa fazer  login ');
 

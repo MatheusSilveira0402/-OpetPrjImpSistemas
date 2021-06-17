@@ -1,8 +1,9 @@
 <!DOCTYPE HTML>
 <html lang="pt-br">
 	<head>
+		
 		<meta charset="UTF-8">
-
+		<link rel="icon" href="images/icon.png">
 		<title>OpeNet</title>
 		
 		<!-- JQUERY -->
@@ -62,6 +63,12 @@
 						<li>
 							<a href="#" id="exibe_participantes">Participantes</a>
 						</li>
+						<% if(dadosForm.usuario === "admin") { %>
+							<li>
+								<a href="/admin" id="admin">Admin</a>
+							</li>
+						<% } %>
+						
 					</ul>
 				</div>
 			</div>

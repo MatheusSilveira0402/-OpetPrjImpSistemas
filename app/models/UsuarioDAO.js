@@ -15,12 +15,14 @@ UsuarioDAO.prototype.inserirUsuario = function(usuario, res){
             var curso = dadosForm.curso;
             
             collection.find({curso:{$eq:curso}}).toArray(function(err, result){
-
+                    
                     if(!result[0] == 0){
+                       
                         if(result[0].curso == dadosForm.curso){
                             monogoclient.collection("usuarios", function(err, collection){       
                                 var dadosForm = usuario;
                                 var user = dadosForm.usuario;
+                                
                                 
                                 collection.find({usuario:{$eq:user}}).toArray(function(err, result){
                 
@@ -34,9 +36,11 @@ UsuarioDAO.prototype.inserirUsuario = function(usuario, res){
                                             var senha_criptografada = crypto.createHash("md5").update(dadosForm.senha).digest("hex");
                 
                                             dadosForm.senha =  senha_criptografada;
-                
+                                            var ava = 1;
+                                            dadosForm.ava = ava; 
+                                            
                                             collection.insert(dadosForm);
-                                            res.redirect("cadastro_sucesso");
+                                            res.redirect("cadastro_em_avalicao");
                                             monogoclient.close();
                                         }
                                 });       
@@ -73,28 +77,91 @@ UsuarioDAO.prototype.autenticar = function(usuario, req, res, application){
                     if(result[0].usuario == dadosForm.usuario){
                     req.session.autorizado = true;
                     req.session.usuario = result[0].usuario;
-                  }
+                    req.session.senha = result[0].senha;
+                    req.session.ava = result[0].ava;
+                        
+
+                    }
                 }
-                if(req.session.autorizado == true){
-                 
-                    req.session.usuario = dadosForm;
-                    application.get('io').emit(
-                        'msgParaCliente',
-                        {usuario: req.session.usuario, mensagem: ' acabou de entrar no chat'}, console.log(req.session.usuario)
-                    )
-                  
+                
+                if(req.session.ava == 1){
+                    res.redirect("cadastro_em_avalicao");
+                }else{
+                
+                    if(req.session.autorizado == true){
                     
-                    console.log(req.session.usuario);
-                    res.render("chat", {dadosForm:req.session.usuario});
+                        req.session.usuario = dadosForm.usuario;
+                        var dados = req.body;
+                        application.get('io').emit(
+                            'msgParaCliente',
+                            {usuario: dados, mensagem: ' acabou de entrar no chat' + req.session.usuario}
+                        )
+                            
+                        
+                        console.log(req.session.usuario,"-", req.session.senha, "-", req.session.ava);
+                        res.render("chat", {dadosForm: dados});
 
-                    mongoclient.close();
+                        mongoclient.close();
 
-                } else{
-                    
-                    res.redirect("login_sem_sucesso");
-                    mongoclient.close();
+                    } else{
+                        
+                        res.redirect("login_sem_sucesso");
+                        mongoclient.close();
+                    }
                 }
             });
+        });
+    });
+}
+
+UsuarioDAO.prototype.listarUsuario = function(res, req){
+    this._connection.open(function(err, mongoclient){
+        mongoclient.collection("usuarios", function(err, collection){
+           
+            collection.find({ava:{$eq:1}}).toArray(function(err,result){
+                
+                if(result != null){
+                    
+
+                    res.render("tela_do_admin", {dadosForm: result});
+                }
+
+            });
+
+        });
+    });
+}
+
+UsuarioDAO.prototype.aprovarUsuario = function(dados,res, req){
+    this._connection.open(function(err, mongoclient){
+        mongoclient.collection("usuarios", function(err, collection){
+            var user = dados.usuario
+            console.log(user)
+           
+            
+            if(user != 0){  
+            
+            collection.update({ava: 1, usuario:{$eq: user}}, {$set: {ava: 0}}, function(err, result){
+                console.log(result);
+
+            });
+            
+            collection.find({ava:{$eq:1}}).toArray(function(err,result){
+                
+                if(result != null){
+
+                    res.render("tela_do_admin", {dadosForm: result});
+                
+                }
+
+            });
+            }else {
+                res.send("não deu");
+            }
+            
+            
+            //res.render("tela_do_admin", {dadosForm: {}}); 
+
         });
     });
 }

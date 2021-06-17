@@ -2,6 +2,7 @@
 <html lang="pt-br">
 	<head>
 		
+		
 		<meta charset="UTF-8">
 		<link rel="icon" href="images/icon.png">
 		<title>OpeNet</title>
@@ -18,27 +19,29 @@
 			$(document).ready( function(){
 				$('#btn_voltar').click(function(){
 					
-					window.location.href = '/sair';	
+					window.location.href = '/';	
 
 				});
 			});
 		</script>
 	</head>
     <body class="body-index">
-		<nav class="navbar navbar-default navbar-static-top">
+		<nav class="navbar navbar-default navbar-static-top" style="background-color: rgba(235, 212, 1, 0); border-color: rgba(0, 0, 0, 0);" >
 			<div class="container">
-				
+			
 			</div>
 		</nav>
         <div class="container">					
-            <div class="alert alert-danger" style="align-items: center; text-align: center;">    
-                <h3>Sem sucesso</h3>
-				<strong>Usuario não exitem!</strong>
-                <br>
-                <strong>Tente novmente cliquando em voltar!</strong>
+            <div class="alert alert-warning" style="align-items: center; text-align: center; background: transparent; border-color: rgba(209, 202, 97, 0);">    
+                <img src="images/warning.png" style="width: 6%;">	
+				<h3 style="color: rgb(255, 255, 255);"><b>Em Avaliação!</b></h3>
+				<strong style="color: rgb(255, 255, 255);">Usuario em processo de avaliação</strong>
+				<br/>
+				<br/>
+				
 					<form class="form-inline form-entrar">
 						<div class="form-group">				
-							<button type="button" class="btn btn-success" id="btn_voltar">Voltar</button>
+							<button type="button" class="btn btn-success" id="btn_voltar" style="background-color: rgb(209, 202, 97); color: black;">Voltar</button>
 						</div>
 					</form>
 			</div>
