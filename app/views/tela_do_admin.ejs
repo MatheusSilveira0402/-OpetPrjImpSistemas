@@ -14,6 +14,8 @@
 	
 		<!-- incluindo css -->
 		<link href="css/style.css" rel="stylesheet">
+
+		
 		
 	</head>
     <body class="body-index">
@@ -39,7 +41,11 @@
 										<br/>
 										<br/>
 										<input hidden value="<%=dadosForm[i].usuario%>"  id="usuario" name="usuario" type="text">
-										<button type="submit" class="btn btn-success" id="aprovar"  >aprovar</button>
+										<input type="submit" value="aprovar" class="btn btn-success" id="aprovar" name="decisao"  >
+											
+										<input  type="submit" value="reprovar"  class="btn btn-success" id="reprovar" name="desicao" style="color: rgb(255, 255, 255); background-color: rgb(122, 4, 4); border-color: rgb(122, 4, 4);" >
+											
+											
 										<br/>
 										<br>
 									</li>

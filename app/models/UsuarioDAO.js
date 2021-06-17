@@ -127,6 +127,7 @@ UsuarioDAO.prototype.listarUsuario = function(res, req){
                 }
 
             });
+            mongoclient.close();
 
         });
     });
@@ -135,33 +136,42 @@ UsuarioDAO.prototype.listarUsuario = function(res, req){
 UsuarioDAO.prototype.aprovarUsuario = function(dados,res, req){
     this._connection.open(function(err, mongoclient){
         mongoclient.collection("usuarios", function(err, collection){
-            var user = dados.usuario
+            var user = dados.usuario;
+            var decisao = dados.desicao;
             console.log(user)
-           
-            
             if(user != 0){  
-            
-            collection.update({ava: 1, usuario:{$eq: user}}, {$set: {ava: 0}}, function(err, result){
-                console.log(result);
+                if(decisao === "reprovar"){
+                    collection.deleteOne({usuario:{$eq: user}}, function(err, result){
 
-            });
-            
-            collection.find({ava:{$eq:1}}).toArray(function(err,result){
-                
-                if(result != null){
+                    });
 
-                    res.render("tela_do_admin", {dadosForm: result});
-                
+                   
+
+                }else{
+                    
+                    collection.update({ava: 1, usuario:{$eq: user}}, {$set: {ava: 0}}, function(err, result){
+                        
+                    });
+                    
                 }
+                
+                collection.find({ava:{$eq:1}}).toArray(function(err,result){
+                    
+                    if(result != null){
 
-            });
-            }else {
-                res.send("não deu");
+                        res.render("tela_do_admin", {dadosForm: result});
+                    
+                    }
+                    mongoclient.close();
+                });
+                
             }
             
-            
-            //res.render("tela_do_admin", {dadosForm: {}}); 
+            else{
 
+                res.send("não deu");
+            
+            }
         });
     });
 }
